@@ -1,7 +1,6 @@
 import 'dart:async';
 
 import 'package:shelf/shelf.dart' as shelf;
-import 'package:http_parser/http_parser.dart';
 import 'body_parser.dart';
 
 /// Creates a Shelf [Middleware] to parse body.
