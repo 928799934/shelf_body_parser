@@ -21,7 +21,7 @@ Future<Response> _messages(Request request) async {
   // 获取 post 文本参数(application/x-www-form-urlencoded)
   print((request.context['postParams'] as Map<String, dynamic>)['xx']);
   // 获取 post 二进制流(form-data)
-  final file = new File('./ccc.png');
+  final file = File('./ccc.png');
   IOSink fileSink = file.openWrite();
   await (request.context['postFileParams'] as Map<String, List<FileParams>>)['zzz1'][0].part.pipe(fileSink);
   fileSink.close();
