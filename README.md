@@ -1,4 +1,4 @@
-A Middleware for Dart Shelf.
+A Middleware for Shelf.
 
 Created from templates made available by Lijian under a BSD-style
 [license](https://github.com/dart-lang/stagehand/blob/master/LICENSE).
