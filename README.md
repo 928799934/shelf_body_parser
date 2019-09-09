@@ -23,10 +23,19 @@ void main() async {
 }
 
 Future<Response> _messages(Request request) async {
-  // context['query']
-  // context['postParams']
-  // context['postFileParams']
-  // context['originalBuffer']
+  // 查看 body 数据(需打开 storeOriginalBuffer)
+  print((request.context['originalBuffer'] as Buffer).store);
+  // 获取 get 参数
+  print((request.context['query'] as Map<String, String>)['aaa']);
+  // 获取 post 文本参数(application/x-www-form-urlencoded)
+  print((request.context['postParams'] as Map<String, dynamic>)['xx']);
+  // 获取 post 二进制流(form-data)
+  final file = new File('./ccc.png');
+  IOSink fileSink = file.openWrite();
+  await (request.context['postFileParams'] as Map<String, List<FileParams>>)['zzz1'][0].part.pipe(fileSink);
+  fileSink.close();
+  print(((request.context['postParams'] as Map<String, dynamic>)['yyy'] as List<String>)[0]);
+
   print(request.context);
   return Response.ok('[]');
 }

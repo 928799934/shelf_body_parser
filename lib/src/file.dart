@@ -1,30 +1,30 @@
 part of body_parser;
 
 /// Represents a file uploaded to the server.
-class File {
+class FileParams {
   /// The MIME type of the uploaded file.
-  String _mimeType;
+  String mimeType;
 
   /// The name of the file field from the request.
-  String _name;
+  String name;
 
   /// The filename of the file.
-  String _filename;
+  String filename;
 
   /// The bytes that make up this file.
-  List<int> _data;
+  MimeMultipart part;
 
-  File(
+  FileParams(
       {String mimeType,
         String name,
         String filename,
-        List<int> data = const []})
-      : _mimeType = mimeType,
-        _name = name,
-        _filename = filename,
-        _data = data;
+        MimeMultipart part})
+      : mimeType = mimeType,
+        name = name,
+        filename = filename,
+        part = part;
 
   @override
   String toString() =>
-      'filename:${this._filename} name:${this._name} mimeType:${this._mimeType} size:${this._data.length}';
+      'filename:${this.filename} name:${this.name} mimeType:${this.mimeType}';
 }

@@ -54,31 +54,31 @@ Future<BodyParseResult> parseBodyFromStream(
           var header = HeaderValue.parse(part.headers['content-disposition']);
           String name = header.parameters['name'];
 
-          BytesBuilder builder = await part.fold(
-              BytesBuilder(copy: false),
-              (BytesBuilder b, d) => b
-                ..add(
-                    d is! String ? (d as List<int>) : (d as String).codeUnits));
-
           String filename = header.parameters['filename'];
           if (filename == null) {
             var list = result.postParams[name];
             if (list == null) {
               list = List<String>();
             }
+            BytesBuilder builder = await part.fold(
+                BytesBuilder(copy: false),
+                (BytesBuilder b, d) => b
+                  ..add(d is! String
+                      ? (d as List<int>)
+                      : (d as String).codeUnits));
             list.add(utf8.decode(builder.takeBytes()));
             result.postParams[name] = list;
             continue;
           }
           var list = result.files[name];
           if (list == null) {
-            list = List<File>();
+            list = List<FileParams>();
           }
-          list.add(File(
+          list.add(FileParams(
               mimeType: MediaType.parse(part.headers['content-type']).mimeType,
               name: name,
               filename: filename,
-              data: builder.takeBytes()));
+              part: part));
           result.files[name] = list;
         }
       } else if (contentType.mimeType == 'application/json') {
@@ -100,7 +100,7 @@ class _BodyParseResultImpl implements BodyParseResult {
   Map<String, dynamic> postParams = {};
 
   @override
-  Map<String, List<File>> files = {};
+  Map<String, List<FileParams>> files = {};
 
   @override
   Buffer originalBuffer;

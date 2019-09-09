@@ -1,10 +1,10 @@
 part of body_parser;
 
 class Buffer {
-  final List<int> _store;
-  Buffer(List<int> store) : _store = store;
-  String get UTF8 => utf8.decode(this._store);
+  final List<int> store;
+  Buffer(List<int> store) : store = store;
+  String get UTF8 => utf8.decode(this.store);
 
   @override
-  String toString() => this._store.toString();
+  String toString() => this.store.toString();
 }
