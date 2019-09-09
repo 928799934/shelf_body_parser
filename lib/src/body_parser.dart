@@ -6,6 +6,7 @@ import 'dart:async';
 import 'dart:convert';
 
 import 'package:mime/mime.dart';
+import 'package:http_parser/http_parser.dart';
 
 part 'buffer.dart';
 part 'file.dart';
