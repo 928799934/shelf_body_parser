@@ -15,10 +15,7 @@ class FileParams {
   MimeMultipart part;
 
   FileParams(
-      {String mimeType,
-        String name,
-        String filename,
-        MimeMultipart part})
+      {String mimeType, String name, String filename, MimeMultipart part})
       : mimeType = mimeType,
         name = name,
         filename = filename,

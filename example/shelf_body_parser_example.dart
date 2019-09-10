@@ -24,7 +24,7 @@ Future<Response> _messages(Request request) async {
   final file = File('./ccc.png');
   IOSink fileSink = file.openWrite();
   await (request.context['postFileParams'] as Map<String, List<FileParams>>)['zzz1'][0].part.pipe(fileSink);
-  fileSink.close();
+  await fileSink.close();
   print(((request.context['postParams'] as Map<String, dynamic>)['yyy'] as List<String>)[0]);
 
   print(request.context);

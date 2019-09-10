@@ -30,9 +30,9 @@ Future<BodyParseResult> parseBodyFromStream(
     var bytes = await getBytes();
     result.originalBuffer = Buffer(bytes);
     var ctrl = StreamController<List<int>>()
-      ..add(bytes)
-      ..close();
+      ..add(bytes);
     stream = ctrl.stream;
+    await ctrl.close();
   }
 
   Future<String> getBody() {
@@ -62,10 +62,8 @@ Future<BodyParseResult> parseBodyFromStream(
             }
             BytesBuilder builder = await part.fold(
                 BytesBuilder(copy: false),
-                (BytesBuilder b, d) => b
-                  ..add(d is! String
-                      ? (d as List<int>)
-                      : (d as String).codeUnits));
+                (BytesBuilder b, List<int> d) =>
+                    b..add(d is! String ? d : (d as String).codeUnits));
             list.add(utf8.decode(builder.takeBytes()));
             result.postParams[name] = list;
             continue;
