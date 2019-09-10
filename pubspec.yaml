@@ -1,5 +1,5 @@
 name: shelf_body_parser
-description: A Middleware for Shelf.
+description: Shelf 的中间件 用于解析get,post 参数及文件
 version: 1.0.3
 homepage: https://github.com/928799934/shelf_body_parser
 author: lijian <928799934@qq.com>

@@ -29,8 +29,7 @@ Future<BodyParseResult> parseBodyFromStream(
   if (storeOriginalBuffer) {
     var bytes = await getBytes();
     result.originalBuffer = Buffer(bytes);
-    var ctrl = StreamController<List<int>>()
-      ..add(bytes);
+    var ctrl = StreamController<List<int>>()..add(bytes);
     stream = ctrl.stream;
     await ctrl.close();
   }

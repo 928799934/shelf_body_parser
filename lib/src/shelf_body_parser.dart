@@ -6,10 +6,6 @@ import 'body_parser.dart';
 
 /// Creates a Shelf [Middleware] to parse body.
 ///
-/// Adds a [CookieParser] instance to `request.context['cookies']`,
-/// with convenience methods to manipulate cookies in request handlers.
-///
-/// Adds a `Set-Cookie` HTTP header to the response with all cookies.
 shelf.Middleware bodyParser({bool storeOriginalBuffer = false}) {
   return (shelf.Handler innerHandler) {
     return (shelf.Request request) async {
