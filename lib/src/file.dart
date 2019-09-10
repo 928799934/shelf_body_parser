@@ -1,4 +1,4 @@
-part of body_parser;
+import 'package:mime/mime.dart';
 
 /// Represents a file uploaded to the server.
 class FileParams {

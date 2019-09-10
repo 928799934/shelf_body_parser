@@ -1,4 +1,4 @@
-part of body_parser;
+import 'dart:convert';
 
 class Buffer {
   final List<int> store;

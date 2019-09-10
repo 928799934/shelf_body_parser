@@ -8,8 +8,8 @@ import 'dart:convert';
 import 'package:mime/mime.dart';
 import 'package:http_parser/http_parser.dart';
 
-part 'buffer.dart';
-part 'file.dart';
+import 'buffer.dart';
+import 'file.dart';
 part 'body_parse_result.dart';
 
 Future<BodyParseResult> parseBodyFromStream(
