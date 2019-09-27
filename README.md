@@ -34,7 +34,7 @@ Future<Response> _messages(Request request) async {
   IOSink fileSink = file.openWrite();
   await (request.context['postFileParams'] as Map<String, List<FileParams>>)['zzz1'][0].part.pipe(fileSink);
   fileSink.close();
-  print(((request.context['postParams'] as Map<String, dynamic>)['yyy'] as List<String>)[0]);
+  print(((request.context['postFileParams'] as Map<String, dynamic>)['yyy'] as List<String>)[0]);
 
   print(request.context);
   return Response.ok('[]');

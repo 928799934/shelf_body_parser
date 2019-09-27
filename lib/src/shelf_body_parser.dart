@@ -21,7 +21,7 @@ shelf.Middleware bodyParser({bool storeOriginalBuffer = false}) {
           request.change(context: {
             'query': result.query,
             'postParams': result.postParams,
-            'postFileParams': result.files,
+            'postFileParams': result.postFileParams,
             'originalBuffer': result.originalBuffer
           }),
         );

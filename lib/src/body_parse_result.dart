@@ -9,7 +9,7 @@ abstract class BodyParseResult {
   Map<String, dynamic> get query;
 
   /// All files uploaded within this request.
-  Map<String, List<FileParams>> get files;
+  Map<String, List<dynamic>> get postFileParams;
 
   /// The original body bytes sent with this request.
   ///

@@ -55,7 +55,7 @@ Future<BodyParseResult> parseBodyFromStream(
 
           String filename = header.parameters['filename'];
           if (filename == null) {
-            var list = result.postParams[name];
+            var list = result.postFileParams[name];
             if (list == null) {
               list = List<String>();
             }
@@ -64,10 +64,10 @@ Future<BodyParseResult> parseBodyFromStream(
                 (BytesBuilder b, List<int> d) =>
                     b..add(d is! String ? d : (d as String).codeUnits));
             list.add(utf8.decode(builder.takeBytes()));
-            result.postParams[name] = list;
+            result.postFileParams[name] = list;
             continue;
           }
-          var list = result.files[name];
+          var list = result.postFileParams[name];
           if (list == null) {
             list = List<FileParams>();
           }
@@ -76,7 +76,7 @@ Future<BodyParseResult> parseBodyFromStream(
               name: name,
               filename: filename,
               part: part));
-          result.files[name] = list;
+          result.postFileParams[name] = list;
         }
       } else if (contentType.mimeType == 'application/json') {
         result.postParams
@@ -97,7 +97,7 @@ class _BodyParseResultImpl implements BodyParseResult {
   Map<String, dynamic> postParams = {};
 
   @override
-  Map<String, List<FileParams>> files = {};
+  Map<String, List<dynamic>> postFileParams = {};
 
   @override
   Buffer originalBuffer;
