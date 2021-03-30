@@ -1,4 +1,5 @@
 import 'dart:io';
+
 import 'package:shelf/shelf.dart';
 import 'package:shelf/shelf_io.dart' as shelf_io;
 import 'package:shelf_body_parser/shelf_body_parser.dart';
@@ -14,18 +15,22 @@ void main() async {
 }
 
 Future<Response> _messages(Request request) async {
-  // 查看 body 数据(需 storeOriginalBuffer:true)
+  // View body data (requires storeOriginalBuffer:true)
   print((request.context['originalBuffer'] as Buffer).store);
-  // 获取 get 参数
+  // Read GET parameters
   print((request.context['query'] as Map<String, String>)['aaa']);
-  // 获取 post 文本参数(application/x-www-form-urlencoded)
+  // Read POST parameters (application/x-www-form-urlencoded)
   print((request.context['postParams'] as Map<String, dynamic>)['xx']);
-  // 获取 post 二进制流(form-data)
+  // Obtain POST binary stream (form-data)
   final file = File('./ccc.png');
   IOSink fileSink = file.openWrite();
-  await (request.context['postFileParams'] as Map<String, List<dynamic>>)['zzz1'][0].part.pipe(fileSink);
+  await (request.context['postFileParams']
+          as Map<String, List<dynamic>>)['zzz1']![0]
+      .part
+      .pipe(fileSink);
   await fileSink.close();
-  print(((request.context['postFileParams'] as Map<String, dynamic>)['yyy'] as List<String>)[0]);
+  print(((request.context['postFileParams'] as Map<String, dynamic>)['yyy']
+      as List<String>)[0]);
 
   print(request.context);
   return Response.ok('[]');

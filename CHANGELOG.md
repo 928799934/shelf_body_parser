@@ -1,23 +1,29 @@
+# 1.0.7
+
+- Add Null Safety support
+- Translate CHANGELOG to English
+- Translate Example to English
+
 # 1.0.6
 
-- 调整 二进制流上传 参数
+- Adjust binary stream upload parameters
 
 # 1.0.5
 
-- 调整 import关系
+- Adjust the import relationship
 
 # 1.0.4
 
-- 调整 pubspec
+- Adjust pubspec
 
 # 1.0.3
 
-- 清理analysis
+- Clean up analysis
 
 # 1.0.2
 
-- File 类改名为 FileParams 存储MimeMultipart 方便文件输出
-- 清理无用导出文件
+- The File class was renamed FileParams to store MimeMultipart to facilitate file output.
+- Clean up useless export files
 
 # 1.0.1
 

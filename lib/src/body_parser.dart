@@ -1,19 +1,20 @@
 library body_parser;
 
-import 'dart:core';
-import 'dart:io';
 import 'dart:async';
 import 'dart:convert';
+import 'dart:core';
+import 'dart:io';
 
-import 'package:mime/mime.dart';
 import 'package:http_parser/http_parser.dart';
+import 'package:mime/mime.dart';
 
 import 'buffer.dart';
 import 'file.dart';
+
 part 'body_parse_result.dart';
 
 Future<BodyParseResult> parseBodyFromStream(
-    Stream<List<int>> data, MediaType contentType, Uri requestUri,
+    Stream<List<int>> data, MediaType? contentType, Uri requestUri,
     {bool storeOriginalBuffer = false}) async {
   Stream<List<int>> stream = data;
 
@@ -47,18 +48,15 @@ Future<BodyParseResult> parseBodyFromStream(
       if (contentType.type == 'multipart' &&
           contentType.parameters.containsKey('boundary')) {
         var parts = stream.transform(
-            MimeMultipartTransformer(contentType.parameters['boundary']));
+            MimeMultipartTransformer(contentType.parameters['boundary']!));
 
         await for (MimeMultipart part in parts) {
-          var header = HeaderValue.parse(part.headers['content-disposition']);
-          String name = header.parameters['name'];
+          var header = HeaderValue.parse(part.headers['content-disposition']!);
+          String name = header.parameters['name']!;
 
-          String filename = header.parameters['filename'];
+          String? filename = header.parameters['filename'];
           if (filename == null) {
-            var list = result.postFileParams[name];
-            if (list == null) {
-              list = List<String>();
-            }
+            List list = result.postFileParams[name] ?? [];
             BytesBuilder builder = await part.fold(
                 BytesBuilder(copy: false),
                 (BytesBuilder b, List<int> d) =>
@@ -67,20 +65,17 @@ Future<BodyParseResult> parseBodyFromStream(
             result.postFileParams[name] = list;
             continue;
           }
-          var list = result.postFileParams[name];
-          if (list == null) {
-            list = List<FileParams>();
-          }
+          List list = result.postFileParams[name] ?? [];
           list.add(FileParams(
-              mimeType: MediaType.parse(part.headers['content-type']).mimeType,
+              mimeType: MediaType.parse(part.headers['content-type']!).mimeType,
               name: name,
               filename: filename,
               part: part));
           result.postFileParams[name] = list;
         }
       } else if (contentType.mimeType == 'application/json') {
-        result.postParams
-            .addAll(_foldToStringDynamic(json.decode(await getBody()) as Map));
+        result.postParams.addAll(
+            _foldToStringDynamic(json.decode(await getBody()) as Map) ?? {});
       } else if (contentType.mimeType == 'application/x-www-form-urlencoded') {
         result.postParams = Uri.splitQueryString(await getBody());
       }
@@ -100,7 +95,7 @@ class _BodyParseResultImpl implements BodyParseResult {
   Map<String, List<dynamic>> postFileParams = {};
 
   @override
-  Buffer originalBuffer;
+  Buffer? originalBuffer;
 
   @override
   Map<String, dynamic> query = {};
@@ -109,10 +104,10 @@ class _BodyParseResultImpl implements BodyParseResult {
   var error;
 
   @override
-  StackTrace stack;
+  StackTrace? stack;
 }
 
-Map<String, dynamic> _foldToStringDynamic(Map map) {
+Map<String, dynamic>? _foldToStringDynamic(Map? map) {
   return map == null
       ? null
       : map.keys.fold<Map<String, dynamic>>(

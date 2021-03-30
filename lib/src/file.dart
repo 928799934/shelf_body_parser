@@ -3,23 +3,18 @@ import 'package:mime/mime.dart';
 /// Represents a file uploaded to the server.
 class FileParams {
   /// The MIME type of the uploaded file.
-  String mimeType;
+  String? mimeType;
 
   /// The name of the file field from the request.
-  String name;
+  String? name;
 
   /// The filename of the file.
-  String filename;
+  String? filename;
 
   /// The bytes that make up this file.
-  MimeMultipart part;
+  MimeMultipart? part;
 
-  FileParams(
-      {String mimeType, String name, String filename, MimeMultipart part})
-      : mimeType = mimeType,
-        name = name,
-        filename = filename,
-        part = part;
+  FileParams({this.mimeType, this.name, this.filename, this.part});
 
   @override
   String toString() =>

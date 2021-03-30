@@ -14,7 +14,7 @@ abstract class BodyParseResult {
   /// The original body bytes sent with this request.
   ///
   /// You must set [storeOriginalBuffer] to `true` to see this.
-  Buffer get originalBuffer;
+  Buffer? get originalBuffer;
 
   /// If an error was encountered while parsing the body, it will appear here.
   ///
@@ -24,5 +24,5 @@ abstract class BodyParseResult {
   /// If an error was encountered while parsing the body, the call stack will appear here.
   ///
   /// Otherwise, this is `null`.
-  StackTrace get stack;
+  StackTrace? get stack;
 }
