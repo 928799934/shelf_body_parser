@@ -1,7 +1,8 @@
 import 'dart:async';
 
-import 'package:shelf/shelf.dart' as shelf;
 import 'package:http_parser/http_parser.dart';
+import 'package:shelf/shelf.dart' as shelf;
+
 import 'body_parser.dart';
 
 /// Creates a Shelf [Middleware] to parse body.
@@ -12,7 +13,7 @@ shelf.Middleware bodyParser({bool storeOriginalBuffer = false}) {
       var result = await parseBodyFromStream(
           request.read(),
           request.headers['content-type'] != null
-              ? MediaType.parse(request.headers['content-type'])
+              ? MediaType.parse(request.headers['content-type']!)
               : null,
           request.url,
           storeOriginalBuffer: storeOriginalBuffer);
@@ -22,7 +23,7 @@ shelf.Middleware bodyParser({bool storeOriginalBuffer = false}) {
             'query': result.query,
             'postParams': result.postParams,
             'postFileParams': result.postFileParams,
-            'originalBuffer': result.originalBuffer
+            'originalBuffer': result.originalBuffer ?? {}
           }),
         );
       }).then((shelf.Response response) {

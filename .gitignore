@@ -1,2 +1,4 @@
 .packages
 .idea/
+*.iml
+.dart_tool/
